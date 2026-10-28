@@ -1,7 +1,7 @@
 /* File : list1.h */
 /* Deskripsi : definisi dan spesifikasi ADT list berkait dengan representasi fisik pointer */
-/* NIM & Nama : */
-/* Tanggal : November 2026 */
+/* NIM & Nama : 24060125120048 & Joshua Briliant Suryana*/
+/* Tanggal : 27 Oktober 2026 */
 #ifndef list1_H
 #define list1_H
 #include "boolean.h"
