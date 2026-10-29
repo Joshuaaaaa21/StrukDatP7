@@ -103,7 +103,7 @@ void UpdateX(List1 *L, infotype X, infotype Y);
 
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
 /*function CountKonsonan(L:List1) -> integer */
-/*{ mengembalikan banyaknya kemunculan huruf vokal dalam list L}*/
+/*{ mengembalikan banyaknya kemunculan huruf konsonan dalam list L}*/
 int CountKonsonan(List1 L);
 
 /*function CountX(L:List1, X:infotype) -> integer */

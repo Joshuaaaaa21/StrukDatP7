@@ -12,7 +12,7 @@ int main()
 {
   /* Kamus */
   address A, B, P, foundAddr;
-  List1 Senarai, L;
+  List1 Senarai, L, Lcopy, Lsplit1, Lsplit2, Lconcat;
   infotype val;
 
   /* Algoritma */
@@ -45,7 +45,7 @@ int main()
   Dealokasi(A);
   Dealokasi(B);
 
-  /* --- 2. PENGUJIAN ADT LIST1 (FUNGSI & PROSEDUR LENGKAP) --- */
+  /* --- 2. PENGUJIAN CREATELIST & ISEMPTYLIST --- */
   printf("--- 2. Pengujian CreateList & IsEmptyList ---\n");
   CreateList(&L);
   printf("Setelah CreateList(&L):\n");
@@ -55,7 +55,8 @@ int main()
   PrintList(L);
   printf("\n\n");
 
-  printf("--- 3. Pengujian InsertVFirst & InsertVLast ---\n");
+  /* --- 3. PENGUJIAN INSERT (VFirst, VLast, VAfter) --- */
+  printf("--- 3. Pengujian Insert (VFirst, VLast, VAfter) ---\n");
   printf("InsertVFirst 'C', 'B', 'A' ke L:\n");
   InsertVFirst(&L, 'C');
   InsertVFirst(&L, 'B');
@@ -64,26 +65,30 @@ int main()
   PrintList(L);
   printf("\n  NbElm(L): %d\n", NbElm(L));
 
-  printf("\nInsertVLast 'D', 'B' (menambahkan 'B' lagi untuk tes duplikasi) ke L:\n");
-  InsertVLast(&L, 'D');
-  InsertVLast(&L, 'B');
+  printf("\nInsertVLast 'E' ke L:\n");
+  InsertVLast(&L, 'E');
+  printf("  Isi L:");
+  PrintList(L);
+  printf("\n  NbElm(L): %d\n", NbElm(L));
+
+  printf("\nInsertVAfter(&L, 'C', 'D') (menyisipkan 'D' setelah 'C'):\n");
+  InsertVAfter(&L, 'C', 'D');
   printf("  Isi L:");
   PrintList(L);
   printf("\n  NbElm(L): %d\n\n", NbElm(L));
 
+  /* --- 4. PENGUJIAN SEARCHX & UPDATEX --- */
   printf("--- 4. Pengujian SearchX & UpdateX ---\n");
-  printf("Pencarian elemen 'B':\n");
-  SearchX(L, 'B', &foundAddr);
+  SearchX(L, 'C', &foundAddr);
   if (foundAddr != NIL) {
-    printf("  SearchX(L, 'B') ditemukan di address %p dengan info '%c'\n", (void*)foundAddr, info(foundAddr));
+    printf("  SearchX(L, 'C') ditemukan pada address %p dengan info '%c'\n", (void*)foundAddr, info(foundAddr));
   } else {
-    printf("  SearchX(L, 'B') TIDAK ditemukan\n");
+    printf("  SearchX(L, 'C') TIDAK ditemukan\n");
   }
 
-  printf("Pencarian elemen 'Z' (tidak ada di list):\n");
   SearchX(L, 'Z', &foundAddr);
   if (foundAddr != NIL) {
-    printf("  SearchX(L, 'Z') ditemukan di address %p\n", (void*)foundAddr);
+    printf("  SearchX(L, 'Z') ditemukan pada address %p\n", (void*)foundAddr);
   } else {
     printf("  SearchX(L, 'Z') berhasil ditangani (TIDAK ditemukan / NIL)\n");
   }
@@ -94,29 +99,77 @@ int main()
   PrintList(L);
   printf("\n\n");
 
-  printf("--- 5. Pengujian CountKonsonan, CountX, & FrekuensiX ---\n");
+  /* --- 5. PENGUJIAN SOAL TAMBAHAN (Konsonan, CountX, FrekuensiX, Modus, NbModus) --- */
+  printf("--- 5. Pengujian Analisis Elemen (Konsonan, CountX, Frekuensi, Modus) ---\n");
+  // Tambahkan elemen 'K' dan 'E' lagi untuk variasi pengujian modus dan duplikasi
+  InsertVLast(&L, 'K');
+  InsertVLast(&L, 'E');
   printf("  Isi L saat ini:");
   PrintList(L);
   printf("\n  Jumlah huruf konsonan (CountKonsonan) : %d\n", CountKonsonan(L));
-  printf("  Jumlah kemunculan 'B' (CountX)        : %d\n", CountX(L, 'B'));
-  printf("  Frekuensi 'B' (FrekuensiX)            : %.2f\n", FrekuensiX(L, 'B'));
-  printf("  Jumlah kemunculan 'Z' (CountX)        : %d\n", CountX(L, 'Z'));
-  printf("  Frekuensi 'Z' (FrekuensiX)            : %.2f\n\n", FrekuensiX(L, 'Z'));
+  printf("  Jumlah kemunculan 'K' (CountX)        : %d\n", CountX(L, 'K'));
+  printf("  Frekuensi 'K' (FrekuensiX)            : %.2f\n", FrekuensiX(L, 'K'));
+  printf("  Modus (huruf paling sering muncul)   : %c\n", Modus(L));
+  printf("  NbModus (frekuensi modus)            : %d\n\n", NbModus(L));
 
+  /* --- 6. PENGUJIAN SEARCHALLX & UPDATEALLX --- */
   printf("--- 6. Pengujian SearchAllX & UpdateAllX ---\n");
-  printf("Posisi semua kemunculan 'B' (SearchAllX): ");
-  SearchAllX(L, 'B');
+  printf("Posisi semua kemunculan 'K' (SearchAllX): ");
+  SearchAllX(L, 'K');
   printf("\nPosisi semua kemunculan 'Z' (SearchAllX): ");
   SearchAllX(L, 'Z');
 
-  printf("\n\nUpdateAllX(&L, 'B', 'M') -> ubah semua kemunculan 'B' menjadi 'M':\n");
-  UpdateAllX(&L, 'B', 'M');
+  printf("\n\nUpdateAllX(&L, 'K', 'X') -> ubah semua kemunculan 'K' menjadi 'X':\n");
+  UpdateAllX(&L, 'K', 'X');
   printf("  Isi L setelah UpdateAllX:");
   PrintList(L);
-  printf("\n  CountX(L, 'M'): %d | CountX(L, 'B'): %d\n\n", CountX(L, 'M'), CountX(L, 'B'));
+  printf("\n\n");
 
-  printf("--- 7. Pengujian DeleteVFirst & DeleteVLast ---\n");
-  printf("Isi list sebelum delete:");
+  /* --- 7. PENGUJIAN INVERS --- */
+  printf("--- 7. Pengujian Invers (Membalik List) ---\n");
+  printf("Isi list L sebelum di-invers:");
+  PrintList(L);
+  Invers(&L);
+  printf("\nIsi list L setelah di-invers :");
+  PrintList(L);
+  printf("\n\n");
+
+  /* --- 8. PENGUJIAN COPYLIST --- */
+  printf("--- 8. Pengujian CopyList ---\n");
+  CopyList(L, &Lcopy);
+  printf("Isi Lcopy (salinan dari L):");
+  PrintList(Lcopy);
+  printf("\nVerifikasi independensi alamat (first berbeda alamat):\n");
+  printf("  Address First(L)     : %p\n", (void*)First(L));
+  printf("  Address First(Lcopy) : %p\n", (void*)First(Lcopy));
+  if (First(L) != First(Lcopy)) {
+    printf("  -> Benar, L dan Lcopy mandiri dengan alamat memori berbeda!\n\n");
+  } else {
+    printf("  -> Alamat masih sama!\n\n");
+  }
+
+  /* --- 9. PENGUJIAN SPLITLIST --- */
+  printf("--- 9. Pengujian SplitList ---\n");
+  // Lcopy berisi 7 elemen: n=7, k=(7+1)/2 = 4 (Lsplit1 mendapat 4 elemen, Lsplit2 mendapat 3 elemen)
+  printf("Memecah Lcopy (NbElm = %d) menjadi Lsplit1 dan Lsplit2:\n", NbElm(Lcopy));
+  SplitList(Lcopy, &Lsplit1, &Lsplit2);
+  printf("  Lsplit1 (NbElm = %d) :", NbElm(Lsplit1));
+  PrintList(Lsplit1);
+  printf("\n  Lsplit2 (NbElm = %d) :", NbElm(Lsplit2));
+  PrintList(Lsplit2);
+  printf("\n\n");
+
+  /* --- 10. PENGUJIAN CONCATLIST --- */
+  printf("--- 10. Pengujian ConcatList ---\n");
+  printf("Menggabungkan kembali Lsplit1 dan Lsplit2 menjadi Lconcat:\n");
+  ConcatList(Lsplit1, Lsplit2, &Lconcat);
+  printf("  Lconcat (gabungan):");
+  PrintList(Lconcat);
+  printf("\n  NbElm(Lconcat)   : %d\n\n", NbElm(Lconcat));
+
+  /* --- 11. PENGUJIAN DELETE (VFirst & VLast) --- */
+  printf("--- 11. Pengujian Delete (VFirst & VLast) ---\n");
+  printf("Isi list L sebelum delete:");
   PrintList(L);
   printf("\n");
 
@@ -124,22 +177,22 @@ int main()
   printf("DeleteVFirst -> elemen terhapus: '%c'\n", val);
   printf("  Isi L:");
   PrintList(L);
-  printf("\n  NbElm(L): %d\n\n", NbElm(L));
+  printf("\n  NbElm(L): %d\n", NbElm(L));
 
   DeleteVLast(&L, &val);
-  printf("DeleteVLast -> elemen terhapus: '%c'\n", val);
+  printf("\nDeleteVLast -> elemen terhapus: '%c'\n", val);
   printf("  Isi L:");
   PrintList(L);
-  printf("\n  NbElm(L): %d\n\n", NbElm(L));
+  printf("\n  NbElm(L): %d\n", NbElm(L));
 
-  printf("--- 8. Pengujian Delete hingga List Kosong (Edge Case 1 Elemen) ---\n");
+  printf("\nMenghapus sisa elemen hingga list L kosong:\n");
   while (!IsEmptyList(L)) {
     DeleteVLast(&L, &val);
-    printf("DeleteVLast -> terhapus '%c', sisa NbElm: %d\n", val, NbElm(L));
+    printf("  DeleteVLast -> terhapus '%c', sisa NbElm: %d\n", val, NbElm(L));
   }
-  printf("List sekarang kosong: IsEmptyList(L) = %s\n", IsEmptyList(L) ? "TRUE" : "FALSE");
+  printf("List L sekarang kosong: IsEmptyList(L) = %s\n", IsEmptyList(L) ? "TRUE" : "FALSE");
 
-  // Uji delete pada list yang sudah kosong
+  // Uji delete pada list kosong
   DeleteVFirst(&L, &val);
   printf("DeleteVFirst pada list kosong -> val = '%c' (default '#')\n", val);
   DeleteVLast(&L, &val);
