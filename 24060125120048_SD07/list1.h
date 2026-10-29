@@ -92,7 +92,7 @@ void DeleteVLast(List1 *L, infotype *V);
 { I.S. L, X terdefinisi }
 { F.S. A berisi alamat elemen yang nilainya X.
 Proses: Mencari apakah ada elemen list dengan info(P)= X. Jika ada, mengisi A dengan address elemen tersebut. Jika tidak ada, A=Nil }*/
-void SearchX(List1 L, infotype X, address A);
+void SearchX(List1 L, infotype X, address *A);
 
 /*** MANIPULASI ELEMEN LIST ***/
 /*Procedure UpdateX(input/output L:List1, input X:infotype, input Y:infotype)
@@ -102,9 +102,9 @@ Proses: Mengganti elemen bernilai X menjadi Y}*/
 void UpdateX(List1 *L, infotype X, infotype Y);
 
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
-/*function CountKonsonan(L:List1, X:infotype) -> integer */
+/*function CountKonsonan(L:List1) -> integer */
 /*{ mengembalikan banyaknya kemunculan huruf vokal dalam list L}*/
-int CountKonsonan(List1 L, infotype X);
+int CountKonsonan(List1 L);
 
 /*function CountX(L:List1, X:infotype) -> integer */
 /*{ mengembalikan banyaknya kemunculan X dalam list L}*/
